@@ -5,6 +5,7 @@ import br.com.alura.manager.dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,11 +29,15 @@ public class LoginServlet extends HttpServlet {
         writer.println("<html>");
         writer.println("<body>");
 
-        if (user == null) {
-            writer.println("User or password is wrong.");
+        if (user != null) {
+            writer.println("User " + user.getEmail() + " has successfully logged in.");
+
+            Cookie cookie = new Cookie("user.logged", email);
+
+            resp.addCookie(cookie);
         }
         else {
-            writer.println("User " + user.getEmail() + " has successfully logged in.");
+            writer.println("User or password is wrong.");
         }
 
         writer.println("</body>");
