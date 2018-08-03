@@ -14,6 +14,22 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = "/search")
 public class CompanySearchServlet extends HttpServlet {
 
+    public CompanySearchServlet() {
+        System.out.println("Servlet was instantiated.");
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        System.out.println("Init servlet");
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        System.out.println("Destroy servlet ");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
