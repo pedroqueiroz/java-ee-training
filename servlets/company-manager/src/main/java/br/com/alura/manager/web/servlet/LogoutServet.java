@@ -1,12 +1,7 @@
 package br.com.alura.manager.web.servlet;
 
-import br.com.alura.manager.web.Cookies;
-
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -17,14 +12,9 @@ public class LogoutServet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-        Cookies cookies = new Cookies(req.getCookies());
+        HttpSession session = req.getSession();
 
-        Cookie cookie = cookies.getAuthenticatedUser();
-
-        if (cookie != null) {
-            cookie.setMaxAge(0);
-            resp.addCookie(cookie);
-        }
+        session.removeAttribute("logged.user");
 
         PrintWriter writer = resp.getWriter();
         writer.println("<html>");

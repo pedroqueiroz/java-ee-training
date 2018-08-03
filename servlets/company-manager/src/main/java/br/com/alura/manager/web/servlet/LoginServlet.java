@@ -3,12 +3,11 @@ package br.com.alura.manager.web.servlet;
 import br.com.alura.manager.User;
 import br.com.alura.manager.dao.UserDAO;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -16,7 +15,7 @@ import java.io.PrintWriter;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
@@ -30,11 +29,10 @@ public class LoginServlet extends HttpServlet {
         writer.println("<body>");
 
         if (user != null) {
+            HttpSession session = req.getSession();
+            session.setAttribute("logged.user", user);
+
             writer.println("User " + user.getEmail() + " has successfully logged in.");
-
-            Cookie cookie = new Cookie("user.logged", email);
-
-            resp.addCookie(cookie);
         }
         else {
             writer.println("User or password is wrong.");
