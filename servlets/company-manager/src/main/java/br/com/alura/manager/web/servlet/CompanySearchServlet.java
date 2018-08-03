@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/search")
 public class CompanySearchServlet extends HttpServlet {
-
     public CompanySearchServlet() {
         System.out.println("Servlet was instantiated.");
     }
@@ -38,13 +37,19 @@ public class CompanySearchServlet extends HttpServlet {
         writer.println("<body>");
         writer.println("Search Result: <br/>");
 
-        String filter = req.getParameter("filter");
+        _filter = req.getParameter("filter");
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         CompanyDAO companyDAO = new CompanyDAO();
 
         writer.println("<ul>");
 
-        for (Company company : companyDAO.searchBySimilarity(filter)) {
+        for (Company company : companyDAO.searchBySimilarity(_filter)) {
             writer.println("<li>" + company.getId() + ": " + company.getName() + "</li>");
         }
 
@@ -53,4 +58,7 @@ public class CompanySearchServlet extends HttpServlet {
         writer.println("</body>");
         writer.println("</html>");
     }
+
+    private String _filter;
+
 }
