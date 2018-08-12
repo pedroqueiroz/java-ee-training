@@ -16,11 +16,6 @@ public class LogoutServet extends HttpServlet {
 
         session.removeAttribute("logged.user");
 
-        PrintWriter writer = resp.getWriter();
-        writer.println("<html>");
-        writer.println("<body>");
-        writer.println("You are logged out.");
-        writer.println("</body>");
-        writer.println("</html>");
+        resp.sendRedirect("logout.html");
     }
 }
